@@ -6,7 +6,7 @@
 /*   By: coder <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 20:11:48 by coder             #+#    #+#             */
-/*   Updated: 2022/09/26 21:46:42 by coder            ###   ########.fr       */
+/*   Updated: 2022/09/28 01:49:43 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ char	*get_next_line(int fd)
 	  line = get_line;
   }
   if (!line)
+  {
+	  free(extra);
 	  return (NULL);
+  }
   return (line);
 }
