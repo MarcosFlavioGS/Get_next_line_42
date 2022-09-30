@@ -6,11 +6,12 @@
 #    By: coder <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 04:53:01 by coder             #+#    #+#              #
-#    Updated: 2022/09/30 05:39:37 by coder            ###   ########.fr        #
+#    Updated: 2022/09/30 06:13:29 by coder            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = get_next_line.c
+SRC = get_next_line.c \
+	  main.c
 
 all:
 	cc -Wall -Wextra -Werror -D BUFFER_SIZE=10 $(SRC)
