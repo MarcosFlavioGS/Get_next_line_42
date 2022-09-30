@@ -3,40 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 20:11:48 by coder             #+#    #+#             */
-/*   Updated: 2022/09/28 01:49:43 by coder            ###   ########.fr       */
+/*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
+/*   Updated: 2022/09/30 05:49:54 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	read_line(int fd)
+#include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
+
+char	*read_line(int fd)
 {
-	while (read(fd) != 0)
-	{
-		if (gnl_strchr('\n'))
-		{
-			return ;
-		}
-	}
+	char	*buffer;
+
+	buffer = (char *) malloc(sizeof(char) * BUFFER_SIZE);
+	read(fd, buffer, BUFFER_SIZE);
+	return (buffer);
 }
 
 char	*get_next_line(int fd)
 {
-  static char 	extra;
-  char			*line;
+  //static char 	extra;
+  //char	*line;
+
   if (!fd || BUFFER_SIZE <= 0)
 	  return (NULL);
-  read_line();
-  if (extra)
-  {
-	  extra = get_extra();
-	  line = get_line;
-  }
-  if (!line)
-  {
-	  free(extra);
-	  return (NULL);
-  }
-  return (line);
+  return (read_line(fd));
+}
+
+int	main(void)
+{
+	int	fd;
+	//int	numbofchars;
+
+	fd = open("teste.txt", O_RDONLY);
+	printf("%s\n", get_next_line(fd));
+	return (0);
 }
