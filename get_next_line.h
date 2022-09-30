@@ -6,7 +6,7 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:34 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/09/28 20:05:37 by mflavio-         ###   ########.fr       */
+/*   Updated: 2022/09/30 07:09:34 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-char *get_next_line(int fd);
+char	*get_next_line(int fd);
+char	*gnl_strjoin(char const *s1, char const *s2);
+char	*gnl_strchr(const char *s, int c);
 #endif
