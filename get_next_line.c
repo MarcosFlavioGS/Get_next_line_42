@@ -6,38 +6,27 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/04 00:43:54 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/04 01:44:43 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void read_line(int fd, char **line)
+void read_line(int fd, char **buffer)
 {
-	char *buffer;
-	int	reader;
+	int	r;
 
-	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	reader = 1;
-	/*while (read(fd, buffer, BUFFER_SIZE) > 0)
-	{
-		line = gnl_strjoin(line, buffer);
-		if (gnl_strchr(line, '\n'))
-			break ;
-	}
-	free(buffer);*/
-	reader = read(fd, buffer, BUFFER_SIZE);
-	buffer[reader] = '\0';
-	*line = gnl_strjoin(*line, buffer);
+	r = read(fd, *buffer, BUFFER_SIZE);
+	*buffer[r] = '\0';
 }
 
 char	*get_next_line(int fd)
 {
-	char	*line;
+	char	*buffer;
 
-	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (fd < 0 || BUFFER_SIZE <= 0 || !buffer)
 		return (NULL);
-	read_line(fd, &line);
-	return (line);
+	read_line(fd, &buffer);
+	return (buffer);
 }

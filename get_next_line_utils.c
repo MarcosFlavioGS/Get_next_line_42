@@ -6,7 +6,7 @@
 /*   By: coder <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 06:53:05 by coder             #+#    #+#             */
-/*   Updated: 2022/10/03 18:23:12 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/04 01:28:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ size_t	gnl_strlcat(char *dest, const char *src, size_t dst_size)
 	size_t	d_len;
 	size_t	s_len;
 	size_t	dest_return;
+
 	d_len = gnl_strlen(dest);
 	s_len = gnl_strlen(src);
 	i = 0;
 	if (dst_size > d_len)
 	{
-		dest_return = d_len = s_len;
+		dest_return = d_len + s_len;
 		while (src[i] && d_len < dst_size - 1)
 		{
 			dest[d_len++] = src[i++];
