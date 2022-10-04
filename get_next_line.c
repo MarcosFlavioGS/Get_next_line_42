@@ -6,39 +6,48 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/04 02:27:58 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/05 00:39:22 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void read_line(int fd, char **buffer, char **stattic)
+void	read_line(int fd, char **stattic, char **tmp)
 {
-	int	r;
+	char	*buffer;
+	int		ret;
 
-	r = 1;
-	while (r > 0)
+
+	buffer = (char *) malloc(sizeof(char) * BUFFER_SIZE + 1);
+	*tmp = (char *) malloc(sizeof(char) * BUFFER_SIZE + 1);
+	*
+	ret = 1;
+	while (ret > 0)
 	{
-		r = read(fd, *buffer, BUFFER_SIZE);
-		if (r == -1)
-		{
-			free(*buffer);
-			break ;
-		}
-		*stattic = gnl_strjoin(*stattic, *buffer);
-		if (gnl_strchr(*stattic, '\0'))
+		ret = read(fd, buffer, BUFFER_SIZE);
+		if (ret == -1)
+			return ;
+		buffer[ret] = '\0';
+		*tmp = gnl_strdup(*stattic);
+		free(*stattic);
+		*stattic = gnl_strjoin(*tmp, buffer);
+		free(*tmp);
+		if (gnl_strchr(*stattic, '\n'))
 			break ;
 	}
+	free(buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*buffer;
 	static char	*stattic;
+	char		*line;
+	char		*tmp;
 
-	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (fd < 0 || BUFFER_SIZE <= 0 || !buffer)
+	stattic = NULL;
+	line = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	read_line(fd, &buffer, &stattic);
-	return (buffer);
+	read_line(fd, &stattic, &tmp);
+	return (stattic);
 }

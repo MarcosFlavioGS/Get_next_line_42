@@ -6,13 +6,13 @@
 /*   By: coder <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 06:53:05 by coder             #+#    #+#             */
-/*   Updated: 2022/10/04 01:28:20 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/05 00:16:36 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	gnl_strlen(const char *str)
+size_t gnl_strlen(const char *str)
 {
 	size_t	len;
 
@@ -22,6 +22,26 @@ size_t	gnl_strlen(const char *str)
 		len++;
 	}
 	return (len);
+}
+
+char	*gnl_strdup(const char *s)
+{
+	int		s_size;
+	int		i;
+	char	*dup;
+
+	i = 0;
+	s_size = gnl_strlen(s);
+	dup = (char *)malloc((s_size + 1) * sizeof(char));
+	if (!dup)
+		return (NULL);
+	while (s[i])
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }
 
 size_t	gnl_strlcpy(char *dest, const char *src, size_t size)
@@ -83,8 +103,8 @@ char	*gnl_strchr(const char *s, int c)
 char	*gnl_strjoin(char const *s1, char const *s2)
 {
 	char	*dest;
-	size_t	s1_len;
-	size_t	s2_len;
+	int		s1_len;
+	int		s2_len;
 
 	s1_len = gnl_strlen(s1);
 	s2_len = gnl_strlen(s2);
