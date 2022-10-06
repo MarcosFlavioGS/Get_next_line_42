@@ -6,7 +6,7 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/06 05:28:52 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/06 05:48:00 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	read_line(int fd, char **str)
 
 char	*get_next_line(int fd)
 {
-	static char *str;
-	//char		*line;
+	static char	*str;
+	char		*line;
 
 	str = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
