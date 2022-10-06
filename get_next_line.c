@@ -6,12 +6,11 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/06 05:16:45 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/06 05:28:52 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 void	read_line(int fd, char **str)
 {
@@ -28,7 +27,6 @@ void	read_line(int fd, char **str)
 		buffer[r] = '\0';
 		tmp = gnl_strdup(*str);
 		*str = gnl_strjoin(tmp, buffer);
-		//printf("Z%sZ", *str);
 		if (gnl_strchr(*str, '\n'))
 			break ;
 	}
