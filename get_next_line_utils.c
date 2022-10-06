@@ -6,10 +6,9 @@
 /*   By: coder <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 06:53:05 by coder             #+#    #+#             */
-/*   Updated: 2022/10/05 00:16:36 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/06 05:15:05 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "get_next_line.h"
 
 size_t gnl_strlen(const char *str)
@@ -31,6 +30,8 @@ char	*gnl_strdup(const char *s)
 	char	*dup;
 
 	i = 0;
+	if (!s)
+		return (gnl_strdup(""));
 	s_size = gnl_strlen(s);
 	dup = (char *)malloc((s_size + 1) * sizeof(char));
 	if (!dup)
@@ -112,7 +113,7 @@ char	*gnl_strjoin(char const *s1, char const *s2)
 	if (dest)
 	{
 		gnl_strlcpy(dest, s1, s1_len + 1);
-		gnl_strlcat(dest, s2, s1_len + s1_len + 1);
+		gnl_strlcat(dest, s2, s1_len + s2_len + 1);
 		return (dest);
 	}
 	return (NULL);

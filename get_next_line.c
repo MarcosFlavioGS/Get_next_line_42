@@ -6,11 +6,12 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/06 02:29:28 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/06 05:16:45 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 void	read_line(int fd, char **str)
 {
@@ -18,20 +19,20 @@ void	read_line(int fd, char **str)
 	char	*tmp;
 	int		r;
 
-	r = 1;
 	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	tmp = buffer;
+	tmp = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	r = 1;
 	while (r)
 	{
 		r = read(fd, buffer, BUFFER_SIZE);
 		buffer[r] = '\0';
-		tmp = gnl_strdup(buffer);
+		tmp = gnl_strdup(*str);
 		*str = gnl_strjoin(tmp, buffer);
+		//printf("Z%sZ", *str);
 		if (gnl_strchr(*str, '\n'))
 			break ;
 	}
 	free(buffer);
-	free(tmp);
 }
 
 char	*get_next_line(int fd)
