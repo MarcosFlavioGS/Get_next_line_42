@@ -6,7 +6,7 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:34 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/06 06:09:50 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/08 00:09:03 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ char	*get_next_line(int fd);
 char	*gnl_strchr(const char *s, int c);
 char	*gnl_strjoin(char const *s1, char const *s2);
 size_t	gnl_strlen(const char *str);
+size_t  gnl_strlcpy(char *dest, const char *src, size_t size);
 #endif

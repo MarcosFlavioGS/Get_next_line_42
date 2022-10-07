@@ -6,7 +6,7 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/07 04:09:21 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/08 00:38:18 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -52,7 +52,7 @@ static void	read_line(int fd, char **str)
 			break ;
 		r = read(fd, buffer, BUFFER_SIZE);
 	}
-	printf("@str depois do read: %s@\n", *str);
+	//printf("@str depois do read: %s@\n", *str);
 	free(buffer);
 	free(tmp);
 }
@@ -63,52 +63,51 @@ static char	*get_line(char *str)
 	int		i;
 
 	i = 0;
-	temp = (char *)malloc(gnl_strlen(str));
+	while(str[i])
+	{
+		if (str[i] == '\n')
+			break ;
+		i++;
+	}
+	i++;
+	temp = (char *)malloc(i + 1);
 	if (!temp)
 	{
 		free(temp);
 		free(str);
 		return (NULL);
 	}
-	while (str[i])
-	{
-		if (str[i] == '\n')
-		{
-			temp[i++] = '\n';
-			break ;
-		}
-		temp[i] = str[i];
-		i++;
-	}
+	gnl_strlcpy(temp, str, i + 1);
 	temp[i] = '\0';
 	return (temp);
 }
 
-static void	clean_s(char *str)
+static char	*clean_s(char *str)
 {
 	int		i;
 	int		j;
 	char	*tmp;
 
-	tmp = (char *)malloc(gnl_strlen(str) + 1);
 	i = 0;
 	j = 0;
 	while (str[i] != '\n')
 		i++;
 	i++;
+	tmp = (char *)malloc(gnl_strlen(str) - i + 1);
 	while (str[i])
 	{
 		tmp[j++] = str[i++];
 	}
 	tmp[j] = '\0';
-	printf("$string tmp: %s$\n", tmp);
+	//printf("$string tmp: %s$\n", tmp);
 	str = gnl_strdup(tmp);
-	printf("#str depois do strdup: %s#\n", str);
+	//printf("#str depois do strdup: %s#\n", str);
+	return (tmp);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*str = NULL;
+	static char	*str;
 	char		*line;
 
 	line = NULL;
@@ -118,8 +117,6 @@ char	*get_next_line(int fd)
 		return (NULL);
 	read_line(fd, &str);
 	line = get_line(str);
-	clean_s(str);
-	if (gnl_strchr(line, '\0') && gnl_strchr(line, '\n') == 0)
-		free(str);
+	str = clean_s(str);
 	return (line);
 }
