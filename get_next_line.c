@@ -6,10 +6,9 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/08 00:38:18 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/08 01:10:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
 #include "get_next_line.h"
 
 static char	*gnl_strdup(const char *s)
@@ -52,7 +51,6 @@ static void	read_line(int fd, char **str)
 			break ;
 		r = read(fd, buffer, BUFFER_SIZE);
 	}
-	//printf("@str depois do read: %s@\n", *str);
 	free(buffer);
 	free(tmp);
 }
@@ -63,7 +61,7 @@ static char	*get_line(char *str)
 	int		i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '\n')
 			break ;
@@ -99,9 +97,7 @@ static char	*clean_s(char *str)
 		tmp[j++] = str[i++];
 	}
 	tmp[j] = '\0';
-	//printf("$string tmp: %s$\n", tmp);
 	str = gnl_strdup(tmp);
-	//printf("#str depois do strdup: %s#\n", str);
 	return (tmp);
 }
 
@@ -116,7 +112,15 @@ char	*get_next_line(int fd)
 	if (read(fd, 0, 0) == -1)
 		return (NULL);
 	read_line(fd, &str);
+	if (!str || !gnl_strlen(str))
+		return (NULL);
 	line = get_line(str);
 	str = clean_s(str);
+	if (!line || !gnl_strlen(line))
+	{
+		free(str);
+		free(line);
+		return (NULL);
+	}
 	return (line);
 }
