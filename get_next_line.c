@@ -6,13 +6,13 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/07 02:27:56 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/07 04:09:21 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 #include "get_next_line.h"
 
-char	*gnl_strdup(const char *s)
+static char	*gnl_strdup(const char *s)
 {
 	int		s_size;
 	int		i;
@@ -34,7 +34,7 @@ char	*gnl_strdup(const char *s)
 	return (dup);
 }
 
-void	read_line(int fd, char **str)
+static void	read_line(int fd, char **str)
 {
 	char	*buffer;
 	char	*tmp;
@@ -52,11 +52,12 @@ void	read_line(int fd, char **str)
 			break ;
 		r = read(fd, buffer, BUFFER_SIZE);
 	}
+	printf("@str depois do read: %s@\n", *str);
 	free(buffer);
 	free(tmp);
 }
 
-char	*get_line(char *str)
+static char	*get_line(char *str)
 {
 	char	*temp;
 	int		i;
@@ -80,11 +81,10 @@ char	*get_line(char *str)
 		i++;
 	}
 	temp[i] = '\0';
-	//printf("$%s$", temp);
 	return (temp);
 }
 
-void	clean_s(char *str)
+static void	clean_s(char *str)
 {
 	int		i;
 	int		j;
@@ -101,8 +101,9 @@ void	clean_s(char *str)
 		tmp[j++] = str[i++];
 	}
 	tmp[j] = '\0';
-	//printf("#%s#", tmp);
+	printf("$string tmp: %s$\n", tmp);
 	str = gnl_strdup(tmp);
+	printf("#str depois do strdup: %s#\n", str);
 }
 
 char	*get_next_line(int fd)
@@ -113,10 +114,12 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	//if (read(fd, 0, 0) == -1)
-	//	return (NULL);
+	if (read(fd, 0, 0) == -1)
+		return (NULL);
 	read_line(fd, &str);
 	line = get_line(str);
 	clean_s(str);
+	if (gnl_strchr(line, '\0') && gnl_strchr(line, '\n') == 0)
+		free(str);
 	return (line);
 }
