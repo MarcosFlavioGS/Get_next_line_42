@@ -6,7 +6,7 @@
 #    By: coder <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 04:53:01 by coder             #+#    #+#              #
-#    Updated: 2022/09/30 07:10:13 by coder            ###   ########.fr        #
+#    Updated: 2022/10/07 01:06:21 by coder            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRC = get_next_line.c 		\
 	  main.c
 
 all:
-	@cc -Wall -Wextra -Werror -D BUFFER_SIZE=10 $(SRC)
+	@cc -Wall -Wextra -Werror -D BUFFER_SIZE=12 $(SRC)
 
 exe: all
 	@./a.out

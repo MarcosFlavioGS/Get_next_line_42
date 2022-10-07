@@ -6,10 +6,10 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/06 23:51:24 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/07 02:27:56 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>
 #include "get_next_line.h"
 
 char	*gnl_strdup(const char *s)
@@ -62,7 +62,7 @@ char	*get_line(char *str)
 	int		i;
 
 	i = 0;
-	temp = (char *)malloc(11);
+	temp = (char *)malloc(gnl_strlen(str));
 	if (!temp)
 	{
 		free(temp);
@@ -80,21 +80,43 @@ char	*get_line(char *str)
 		i++;
 	}
 	temp[i] = '\0';
+	//printf("$%s$", temp);
 	return (temp);
+}
+
+void	clean_s(char *str)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	tmp = (char *)malloc(gnl_strlen(str) + 1);
+	i = 0;
+	j = 0;
+	while (str[i] != '\n')
+		i++;
+	i++;
+	while (str[i])
+	{
+		tmp[j++] = str[i++];
+	}
+	tmp[j] = '\0';
+	//printf("#%s#", tmp);
+	str = gnl_strdup(tmp);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str = NULL;
 	char		*line;
 
-	str = NULL;
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (read(fd, 0, 0) == -1)
-		return (NULL);
+	//if (read(fd, 0, 0) == -1)
+	//	return (NULL);
 	read_line(fd, &str);
 	line = get_line(str);
+	clean_s(str);
 	return (line);
 }
