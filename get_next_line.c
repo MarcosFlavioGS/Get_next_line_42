@@ -6,11 +6,10 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/08 02:20:33 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/08 04:03:13 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
-#include <stdio.h>
 
 static char	*gnl_strdup(const char *s)
 {
@@ -40,7 +39,7 @@ static void	read_line(int fd, char **str)
 	char	*tmp;
 	int		r;
 
-	if (!*str)
+	if (!str)
 		*str = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	tmp = buffer;
@@ -49,16 +48,13 @@ static void	read_line(int fd, char **str)
 	{
 		buffer[r] = '\0';
 		tmp = gnl_strdup(*str);
-		//printf("#strdup de str para tmp: %s#\n", tmp);
 		*str = gnl_strjoin(tmp, buffer);
 		free(tmp);
 		if (gnl_strchr(*str, '\n'))
-		{
-			free(buffer);
 			break ;
-		}
 		r = read(fd, buffer, BUFFER_SIZE);
 	}
+	free(buffer);
 }
 
 static char	*get_line(char *str)
@@ -94,22 +90,28 @@ static char	*clean_s(char *str)
 
 	i = 0;
 	j = 0;
-	while (str[i] != '\n')
+	while (str[i] && str[i] != '\n')
 		i++;
+	if (!str[i])
+	{
+		free(str);
+		str = NULL;
+		return (NULL);
+	}
 	i++;
 	tmp = (char *)malloc(gnl_strlen(str) - i + 1);
-	while (str[i])
+	while (str[i] && str[i] != 0)
 	{
 		tmp[j++] = str[i++];
 	}
 	tmp[j] = '\0';
-	str = gnl_strdup(tmp);
+	free(str);
 	return (tmp);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str = NULL;
 	char		*line;
 
 	line = NULL;
