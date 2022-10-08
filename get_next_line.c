@@ -6,10 +6,11 @@
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/08 01:10:20 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/08 02:20:33 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
+#include <stdio.h>
 
 static char	*gnl_strdup(const char *s)
 {
@@ -39,20 +40,25 @@ static void	read_line(int fd, char **str)
 	char	*tmp;
 	int		r;
 
+	if (!*str)
+		*str = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	tmp = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	tmp = buffer;
 	r = read(fd, buffer, BUFFER_SIZE);
 	while (r)
 	{
 		buffer[r] = '\0';
 		tmp = gnl_strdup(*str);
+		//printf("#strdup de str para tmp: %s#\n", tmp);
 		*str = gnl_strjoin(tmp, buffer);
+		free(tmp);
 		if (gnl_strchr(*str, '\n'))
+		{
+			free(buffer);
 			break ;
+		}
 		r = read(fd, buffer, BUFFER_SIZE);
 	}
-	free(buffer);
-	free(tmp);
 }
 
 static char	*get_line(char *str)
