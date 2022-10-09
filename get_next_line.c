@@ -48,6 +48,7 @@ static void	read_line(int fd, char **str)
 	{
 		buffer[r] = '\0';
 		tmp = gnl_strdup(*str);
+		free(*str);
 		*str = gnl_strjoin(tmp, buffer);
 		free(tmp);
 		if (gnl_strchr(*str, '\n'))
@@ -70,11 +71,11 @@ static char	*get_line(char *str)
 		i++;
 	}
 	i++;
-	temp = (char *)malloc(i + 1);
+	temp = (char *)malloc(sizeof(char) * i + 1);
 	if (!temp)
 	{
-		free(temp);
 		free(str);
+		free(temp);
 		return (NULL);
 	}
 	gnl_strlcpy(temp, str, i + 1);
@@ -92,18 +93,18 @@ static char	*clean_s(char *str)
 	j = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
-	if (!str[i])
+	if (!str[i] || !str[i + 1])
 	{
 		free(str);
 		str = NULL;
 		return (NULL);
 	}
 	i++;
-	tmp = (char *)malloc(gnl_strlen(str) - i + 1);
+	tmp = (char *)malloc(sizeof(char) * (gnl_strlen(str) - i + 1));
+	if (!tmp)
+		return (free(str), free(tmp), NULL);
 	while (str[i] && str[i] != 0)
-	{
 		tmp[j++] = str[i++];
-	}
 	tmp[j] = '\0';
 	free(str);
 	return (tmp);
@@ -126,8 +127,8 @@ char	*get_next_line(int fd)
 	str = clean_s(str);
 	if (!line || !gnl_strlen(line))
 	{
-		free(str);
 		free(line);
+		free(str);
 		return (NULL);
 	}
 	return (line);
