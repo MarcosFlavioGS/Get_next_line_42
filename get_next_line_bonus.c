@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:05:19 by mflavio-          #+#    #+#             */
-/*   Updated: 2022/10/11 04:42:23 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/11 23:05:17 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,23 +113,23 @@ static char	*clean_s(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str = NULL;
+	static char	*str[1024];
 	char		*line;
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (read(fd, 0, 0) == -1)
 		return (NULL);
-	read_line(fd, &str);
-	if (!str || !gnl_strlen(str))
+	read_line(fd, &str[fd]);
+	if (!str[fd] || !gnl_strlen(str[fd]))
 		return (NULL);
-	line = get_line(str);
-	str = clean_s(str);
+	line = get_line(str[fd]);
+	str[fd] = clean_s(str[fd]);
 	if (!line || !gnl_strlen(line))
 	{
 		free(line);
-		free(str);
+		free(str[fd]);
 		return (NULL);
 	}
 	return (line);
