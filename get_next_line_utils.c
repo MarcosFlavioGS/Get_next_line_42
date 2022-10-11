@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mflavio- <mfghost69@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 06:53:05 by coder             #+#    #+#             */
-/*   Updated: 2022/10/06 06:06:34 by coder            ###   ########.fr       */
+/*   Created: 2022/10/11 04:34:42 by mflavio-          #+#    #+#             */
+/*   Updated: 2022/10/11 04:36:05 by mflavio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line.h"
 
 size_t	gnl_strlen(const char *str)
