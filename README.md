@@ -12,3 +12,5 @@ Get_next_line(or GNL) is a C function to read a from a file descriptor line by l
 # Requirements
   
 This project must be done in accordance with the <a href="https://github.com/42School/norminette/blob/master/pdf/en.norm.pdf" target="_blank">Norm</a>
+
+The norm is a set of programing rules to follow when writing code at 42.
