@@ -5,7 +5,7 @@ A C function that reads a file line by line
 <p align="center"><img src="https://github.com/MarcosFlavioGS/Get_next_line_42/blob/master/42_badge/get_next_linem.png">
 <p align="center"> <strong>112/100</strong> ✅
 
-# What id Get_next_line ?
+# What is Get_next_line ?
   
 Get_next_line(or GNL) is a C function to read a from a file descriptor line by line, each time it is called. It is the second project at 42 and can be very useful for future projects as well.
   
